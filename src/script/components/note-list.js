@@ -1,4 +1,4 @@
-import Utils from "../utils";
+import Utils from "../utils.js";
 
 class NoteList extends HTMLElement {
     _shadowRoot = null;
@@ -66,7 +66,7 @@ class NoteList extends HTMLElement {
         `;
     }
 
-    attributeChangedCallback() {
+    attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
             case 'column':
                 this.column = newValue;
