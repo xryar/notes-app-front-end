@@ -6,11 +6,12 @@
 
 body {
     font-family: sans-serif;
+    background-color: #9ACBD0;
 }
 
 header {
-    background-color: cornflowerblue;
-    color: beige;
+    background-color: #2973B2;
+    color: #F2EFE7;
 }
 
 main h2 {
@@ -24,4 +25,9 @@ main h2 {
     padding-block: 32px;
     padding-inline: 16px;
     margin-inline: auto;
+}
+
+footer {
+    background-color: #2973B2;
+    color: #F2EFE7;
 }

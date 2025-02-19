@@ -28,6 +28,26 @@ class NoteList extends HTMLElement {
                 grid-template-columns: ${'1fr '.repeat(this.column)};
                 gap: ${this._gutter}px;
             }
+
+            @media screen and (max-width: 768px) {
+                .list {
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                }
+            }
+
+            @media screen and (max-width: 480px) {
+                .list {
+                    grid-template-columns: 1fr;
+                }
+
+                .note-info {
+                    padding: 12px;
+                }
+
+                .note-info__title h2 {
+                    font-size: 18px;
+                }
+            }
         `;
     }
 

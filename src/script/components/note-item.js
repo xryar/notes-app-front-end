@@ -35,14 +35,27 @@ class NoteItem extends HTMLElement {
                 border-radius: 8px;
                 box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
                 overflow: hidden;
+                background-color: white;
+                max-width: 100%;
             }
 
             .note-info {
                 padding: 16px 24px;
             }
 
+            .note-info__title {
+                background-color: #48A6A7;
+                width: 100%;
+                padding: 12px 0;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
             .note-info__title h2 {
                 font-weight: lighter;
+                color: #F2EFE7;
+                margin: 0;
+                padding: 0;
             }
 
             .note-info__description p {

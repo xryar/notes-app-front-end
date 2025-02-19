@@ -26,6 +26,28 @@ class AppBar extends HTMLElement {
                 margin: 0;
                 font-size: 1.7em;
             }
+
+            @media screen and (max-width: 768px) {
+                div {
+                    padding: 12px 16px;
+                }
+                
+                .brand-name {
+                    font-size: 1.5em;
+                    text-align: center;
+                }
+            }
+
+            @media screen and (max-width: 480px) {
+                div {
+                    padding: 10px 12px;
+                    justify-content: center;
+                }
+
+                .brand-name {
+                    font-size: 1.2em;
+                }
+            }
         `;
     }
 

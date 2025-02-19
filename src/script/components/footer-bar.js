@@ -17,6 +17,23 @@ class FooterBar extends HTMLElement {
             div {
                 padding: 24px 20px;
                 text-align: center;
+                font-size: 1.3rem;
+            }
+
+            @media screen and (max-width: 768px) {
+                div {
+                    padding: 12px 16px;
+                    font-size: 1.3rem;
+                    text-align: center;
+                }
+            }
+
+            @media screen and (max-width: 480px) {
+                div {
+                    padding: 10px 12px;
+                    text-align: center;
+                    font-size: 1.2em;
+                }
             }
         `;
     }
@@ -34,7 +51,7 @@ class FooterBar extends HTMLElement {
         this._updateStyle();
 
         this._shadowRoot.appendChild(this._style);
-        this._shadowRoot.innerHTML = `
+        this._shadowRoot.innerHTML += `
             <div>
                 Submission Dicoding, Fundamental Web Development.
             </div>
