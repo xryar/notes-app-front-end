@@ -110,6 +110,10 @@ class Notes {
     static getAllNotes() {
         return notesData;
     }
+
+    static addNote(note) {
+      notesData.push(note);
+    }
 }
 
 export default Notes;

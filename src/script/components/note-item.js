@@ -56,6 +56,11 @@ class NoteItem extends HTMLElement {
         `;
     }
 
+    formatDate = (isoString) => {
+        const date = new Date(isoString);
+        return date.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+    };
+
     render() {
         this._emptyContent();
         this._updateStyle();
@@ -70,7 +75,7 @@ class NoteItem extends HTMLElement {
                         <p>${this.note.body}</p>
                     </div>
                     <div class="note-info__createdAt">
-                        <p>${this.note.createdAt}</p>
+                        <p>${this.formatDate(this.note.createdAt)}</p>
                     </div>
                 </div>
             </div>

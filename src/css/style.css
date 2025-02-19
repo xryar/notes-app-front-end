@@ -7,3 +7,21 @@
 body {
     font-family: sans-serif;
 }
+
+header {
+    background-color: cornflowerblue;
+    color: beige;
+}
+
+main h2 {
+    text-align: center;
+    margin-block-end: 2rem;
+    font-size: 1.7rem;
+}
+
+.container {
+    max-width: 1000px;
+    padding-block: 32px;
+    padding-inline: 16px;
+    margin-inline: auto;
+}

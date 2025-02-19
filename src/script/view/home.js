@@ -3,7 +3,10 @@ import Notes from '../data/local/notes.js';
 
 const home = () => {
     const noteListContainer = document.querySelector('#noteListContainer');
+    console.log(noteListContainer);
     const noteListElement = noteListContainer.querySelector('note-list');
+    console.log(noteListElement);
+    const formInputElement = document.querySelector('form-input');
 
     const showAllNotes = () => {
         const notes = Notes.getAllNotes();
@@ -15,6 +18,14 @@ const home = () => {
         }) 
     }
 
+    const addNewNote = (event) => {
+        const newNote = event.detail;
+
+        Notes.addNote(newNote);
+        showAllNotes();
+    }
+
+    formInputElement.addEventListener('note-submitted', addNewNote);
     showAllNotes();
 }
 
