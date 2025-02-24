@@ -65,11 +65,8 @@ class FormInput extends HTMLElement {
         }
 
         const noteData = {
-            id: +new Date(),
             title: titleElement.value,
             body: bodyElement.value,
-            createdAt: new Date().toLocaleString(),
-            archived: false,
         }
 
         this.dispatchEvent(new CustomEvent('note-submitted', {
