@@ -1,4 +1,6 @@
 import "../utils.js";
+import Swal from "sweetalert2";
+import { animate, stagger } from "motion";
 import NotesApi from "../data/remote/notes-api.js";
 
 const home = async () => {
@@ -9,6 +11,7 @@ const home = async () => {
   const formInputElement = document.querySelector("form-input");
   console.log(formInputElement);
   const loadingIndicator = document.querySelector("#loading");
+  console.log(loadingIndicator);
 
   const showAllNotes = async () => {
     try {
@@ -19,14 +22,24 @@ const home = async () => {
 
       loadingIndicator.classList.add("hidden");
 
-      notes.forEach((note) => {
+      notes.forEach((note, index) => {
         const noteItemElement = document.createElement("note-item");
         noteItemElement.note = note;
         noteListElement.appendChild(noteItemElement);
+        animate(
+          noteItemElement,
+          { opacity: [0, 1], scale: [0.8, 1] },
+          { duration: 0.3, delay: index * 0.1 },
+        );
       });
     } catch (error) {
       console.error("Gagal Mengambil Catatan cik: ", error);
       loadingIndicator.classList.add("hidden");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Gagal Mengambil Catatan cik, Coba lagi ya!",
+      });
     }
   };
 
@@ -38,6 +51,11 @@ const home = async () => {
         await showAllNotes();
       }
       console.log("Berhasil Menambah Catatan: ", addedNote);
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil!",
+        text: "Catatan berhasil ditambah!",
+      });
     } catch (error) {
       console.error("Gagal Menambah Catatan: ", error);
     }
@@ -49,8 +67,20 @@ const home = async () => {
       await NotesApi.deleteNote(noteId);
       await showAllNotes();
       console.log("Berhasil Menghapus Catatan: ", noteId);
+
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil!",
+        text: "Catatan berhasil dihapus!",
+      });
     } catch (error) {
       console.error("Gagal Menghapus Catatan: ", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Gagal Menghapus Catatan cik, Coba lagi ya!",
+      });
     }
   };
 

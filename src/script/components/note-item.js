@@ -1,3 +1,5 @@
+import { animate } from "motion";
+
 class NoteItem extends HTMLElement {
   _shadowRoot = null;
   _style = null;
@@ -36,13 +38,17 @@ class NoteItem extends HTMLElement {
   _handleDelete(event) {
     event.preventDefault();
 
-    this.dispatchEvent(
-      new CustomEvent("note-deleted", {
-        detail: this.note.id,
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    animate(
+      this, 
+      { opacity: [1, 0], scale: [1, 0.8] }, 
+      { duration: 0.3 }
+      ).finished.then(() => {
+          this.dispatchEvent(new CustomEvent('note-deleted', {
+              detail: this.note.id,
+              bubbles: true,
+              composed: true,
+          }));
+      });
   }
 
   set note(value) {
