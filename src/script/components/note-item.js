@@ -39,16 +39,18 @@ class NoteItem extends HTMLElement {
     event.preventDefault();
 
     animate(
-      this, 
-      { opacity: [1, 0], scale: [1, 0.8] }, 
-      { duration: 0.3 }
-      ).finished.then(() => {
-          this.dispatchEvent(new CustomEvent('note-deleted', {
-              detail: this.note.id,
-              bubbles: true,
-              composed: true,
-          }));
-      });
+      this,
+      { opacity: [1, 0], scale: [1, 0.8] },
+      { duration: 0.3 },
+    ).finished.then(() => {
+      this.dispatchEvent(
+        new CustomEvent("note-deleted", {
+          detail: this.note.id,
+          bubbles: true,
+          composed: true,
+        }),
+      );
+    });
   }
 
   set note(value) {
