@@ -1,90 +1,93 @@
 class FormInput extends HTMLElement {
-    _shadowRoot = null;
-    _style = null;
-    _submitEvent = 'submit'; 
+  _shadowRoot = null;
+  _style = null;
+  _submitEvent = "submit";
 
-    constructor() {
-        super();
-        this._shadowRoot = this.attachShadow({ mode: 'open' });
-        this._style = document.createElement('style');
-        this.render();
+  constructor() {
+    super();
+    this._shadowRoot = this.attachShadow({ mode: "open" });
+    this._style = document.createElement("style");
+    this.render();
+  }
+
+  connectedCallback() {
+    this._shadowRoot
+      .querySelector("#noteForm")
+      .addEventListener(this._submitEvent, (event) =>
+        this._handleSubmit(event),
+      );
+
+    this._validation();
+  }
+
+  disconnectedCallback() {
+    this._shadowRoot
+      .querySelector("#noteForm")
+      .removeEventListener(this._submitEvent, this._handleSubmit);
+  }
+
+  _handleSubmit(event) {
+    event.preventDefault();
+    const titleElement = this._shadowRoot.querySelector("#noteFormTitle");
+    const bodyElement = this._shadowRoot.querySelector("#noteFormBody");
+
+    if (!titleElement.validity.valid || !bodyElement.validity.valid) {
+      return;
     }
 
-    connectedCallback() {
-        this._shadowRoot
-            .querySelector('#noteForm')
-            .addEventListener(this._submitEvent, (event) => this._handleSubmit(event));
-        
-        this._validation();
-    }
+    const noteData = {
+      title: titleElement.value,
+      body: bodyElement.value,
+    };
 
-    disconnectedCallback() {
-        this._shadowRoot
-            .querySelector('#noteForm')
-            .removeEventListener(this._submitEvent, this._handleSubmit);
-    }
+    this.dispatchEvent(
+      new CustomEvent("note-submitted", {
+        detail: noteData,
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
-    _handleSubmit(event) {
-        event.preventDefault();
-        const titleElement = this._shadowRoot.querySelector('#noteFormTitle');
-        const bodyElement = this._shadowRoot.querySelector('#noteFormBody');
+    event.target.reset();
+  }
 
-        if(!titleElement.validity.valid || !bodyElement.validity.valid) {
-            return;
-        }
+  _validation() {
+    const titleElement = this._shadowRoot.querySelector("#noteFormTitle");
+    const bodyElement = this._shadowRoot.querySelector("#noteFormBody");
+    const titleValidation = this._shadowRoot.querySelector("#titleValidation");
+    const bodyValidation = this._shadowRoot.querySelector("#bodyValidation");
 
-        const noteData = {
-            title: titleElement.value,
-            body: bodyElement.value,
-        }
+    const validateInput = (event) => {
+      const input = event.target;
+      let validationMessage = "";
 
-        this.dispatchEvent(new CustomEvent('note-submitted', {
-            detail: noteData,
-            bubbles: true,
-            composed: true,
-        }));
+      if (input.validity.valueMissing) {
+        validationMessage = "Wajib diisi bang.";
+      } else if (input === titleElement && input.value.length < 6) {
+        validationMessage = "Minimal 6 karakter bang.";
+      } else if (input === bodyElement && input.value.length < 10) {
+        validationMessage = "Minimal 10 karakter ya bang.";
+      }
 
-        event.target.reset();
-    }
+      if (input === titleElement) {
+        titleValidation.textContent = validationMessage;
+      } else if (input === bodyElement) {
+        bodyValidation.textContent = validationMessage;
+      }
+    };
 
-    _validation() {
-        const titleElement = this._shadowRoot.querySelector('#noteFormTitle');
-        const bodyElement = this._shadowRoot.querySelector('#noteFormBody');
-        const titleValidation = this._shadowRoot.querySelector('#titleValidation');
-        const bodyValidation = this._shadowRoot.querySelector('#bodyValidation');
+    titleElement.addEventListener("input", validateInput);
+    bodyElement.addEventListener("input", validateInput);
+    titleElement.addEventListener("invalid", validateInput);
+    bodyElement.addEventListener("invalid", validateInput);
+  }
 
-        const validateInput = (event) => {
-            const input = event.target;
-            let validationMessage = '';
+  _emptyContent() {
+    this._shadowRoot.innerHTML = "";
+  }
 
-            if (input.validity.valueMissing) {
-                validationMessage = 'Wajib diisi bang.';
-            } else if (input === titleElement && input.value.length < 6) {
-                validationMessage = 'Minimal 6 karakter bang.';
-            } else if (input === bodyElement && input.value.length < 10) {
-                validationMessage = 'Minimal 10 karakter ya bang.';
-            }
-
-            if (input === titleElement) {
-                titleValidation.textContent = validationMessage;
-            } else if (input === bodyElement) {
-                bodyValidation.textContent = validationMessage;
-            }
-        };
-
-        titleElement.addEventListener('input', validateInput);
-        bodyElement.addEventListener('input', validateInput);
-        titleElement.addEventListener('invalid', validateInput);
-        bodyElement.addEventListener('invalid', validateInput);
-    }
-
-    _emptyContent() {
-        this._shadowRoot.innerHTML = '';
-    }
-
-
-    _updateStyle() {
-        this._style.textContent = `
+  _updateStyle() {
+    this._style.textContent = `
             :host {
                 display: block;
             }
@@ -191,17 +194,17 @@ class FormInput extends HTMLElement {
                 }
             }
         `;
-    }
+  }
 
-    _emptyContent() {
-        this._shadowRoot.innerHTML = '';
-    }
+  _emptyContent() {
+    this._shadowRoot.innerHTML = "";
+  }
 
-    render() {
-        this._emptyContent();
-        this._updateStyle();
-        this._shadowRoot.appendChild(this._style);
-        this._shadowRoot.innerHTML += `
+  render() {
+    this._emptyContent();
+    this._updateStyle();
+    this._shadowRoot.appendChild(this._style);
+    this._shadowRoot.innerHTML += `
             <section class="input-section">
                 <h2>Add New Note</h2>
                 <form id="noteForm">
@@ -221,7 +224,7 @@ class FormInput extends HTMLElement {
                 </form>
             </section>
         `;
-    }
+  }
 }
 
-customElements.define('form-input', FormInput);
+customElements.define("form-input", FormInput);

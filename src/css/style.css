@@ -1,45 +1,45 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: sans-serif;
-    background-color: #9ACBD0;
+  font-family: sans-serif;
+  background-color: #9acbd0;
 }
 
 header {
-    background-color: #2973B2;
-    color: #F2EFE7;
+  background-color: #2973b2;
+  color: #f2efe7;
 }
 
 main h2 {
-    text-align: center;
-    margin-block-end: 2rem;
-    font-size: 1.7rem;
+  text-align: center;
+  margin-block-end: 2rem;
+  font-size: 1.7rem;
 }
 
 .container {
-    max-width: 1000px;
-    padding-block: 32px;
-    padding-inline: 16px;
-    margin-inline: auto;
+  max-width: 1000px;
+  padding-block: 32px;
+  padding-inline: 16px;
+  margin-inline: auto;
 }
 
 .loading {
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: #48A6A7;
-    margin: 20px 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #48a6a7;
+  margin: 20px 0;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 footer {
-    background-color: #2973B2;
-    color: #F2EFE7;
+  background-color: #2973b2;
+  color: #f2efe7;
 }

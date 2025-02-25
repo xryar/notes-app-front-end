@@ -1,7 +1,7 @@
-import './script/components/index.js';
-import './css/style.css';
-import home from './script/view/home.js';
+import "./script/components/index.js";
+import "./css/style.css";
+import home from "./script/view/home.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-    home();
-})
+document.addEventListener("DOMContentLoaded", () => {
+  home();
+});

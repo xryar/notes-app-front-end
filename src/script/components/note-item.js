@@ -1,59 +1,61 @@
 class NoteItem extends HTMLElement {
-    _shadowRoot = null;
-    _style = null;
-    _click = 'click';
-    _note = {
-        id: null,
-        title: null,
-        body: null,
-        createdAt: null,
-        archived: false,
-    };
+  _shadowRoot = null;
+  _style = null;
+  _click = "click";
+  _note = {
+    id: null,
+    title: null,
+    body: null,
+    createdAt: null,
+    archived: false,
+  };
 
-    constructor() {
-        super();
-        this._shadowRoot = this.attachShadow({ mode: 'open'});
-        this._style = document.createElement('style');
-        this.render();
-    }
+  constructor() {
+    super();
+    this._shadowRoot = this.attachShadow({ mode: "open" });
+    this._style = document.createElement("style");
+    this.render();
+  }
 
-    _emptyContent() {
-        this._shadowRoot.innerHTML = '';
-    }
+  _emptyContent() {
+    this._shadowRoot.innerHTML = "";
+  }
 
-    connectedCallback() {
-        this._shadowRoot
-            .querySelector('.btn-delete')
-            .addEventListener(this._click, (event) => this._handleDelete(event));
-    }
+  connectedCallback() {
+    this._shadowRoot
+      .querySelector(".btn-delete")
+      .addEventListener(this._click, (event) => this._handleDelete(event));
+  }
 
-    disconnectedCallback() {
-        this._shadowRoot
-            .querySelector('.btn-delete')
-            .removeEventListener(this._click, this._handleDelete);
-    }
+  disconnectedCallback() {
+    this._shadowRoot
+      .querySelector(".btn-delete")
+      .removeEventListener(this._click, this._handleDelete);
+  }
 
-    _handleDelete(event) {
-        event.preventDefault();
+  _handleDelete(event) {
+    event.preventDefault();
 
-        this.dispatchEvent(new CustomEvent('note-deleted', {
-            detail: this.note.id,
-            bubbles: true,
-            composed: true,
-        }));
-    }
+    this.dispatchEvent(
+      new CustomEvent("note-deleted", {
+        detail: this.note.id,
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
 
-    set note(value) {
-        this._note = value;
-        this.render();
-    }
+  set note(value) {
+    this._note = value;
+    this.render();
+  }
 
-    get note() {
-        return this._note;
-    }
+  get note() {
+    return this._note;
+  }
 
-    _updateStyle() {
-        this._style.textContent = `
+  _updateStyle() {
+    this._style.textContent = `
             :host {
                 display:block;
                 border-radius: 8px;
@@ -109,18 +111,22 @@ class NoteItem extends HTMLElement {
                 -webkit-line-clamp: 5;
             }
         `;
-    }
+  }
 
-    formatDate = (isoString) => {
-        const date = new Date(isoString);
-        return date.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
-    };
+  formatDate = (isoString) => {
+    const date = new Date(isoString);
+    return date.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
 
-    render() {
-        this._emptyContent();
-        this._updateStyle();
-        this._shadowRoot.appendChild(this._style);
-        this._shadowRoot.innerHTML += `
+  render() {
+    this._emptyContent();
+    this._updateStyle();
+    this._shadowRoot.appendChild(this._style);
+    this._shadowRoot.innerHTML += `
             <div class="card">
                 <div class="note-info">
                     <div class="note-info__title">
@@ -136,7 +142,7 @@ class NoteItem extends HTMLElement {
                 <button class="btn-delete">Delete</button>
             </div>
         `;
-    }
+  }
 }
 
-customElements.define('note-item', NoteItem);
+customElements.define("note-item", NoteItem);
