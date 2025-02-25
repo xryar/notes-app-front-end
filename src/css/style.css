@@ -27,6 +27,18 @@ main h2 {
     margin-inline: auto;
 }
 
+.loading {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #48A6A7;
+    margin: 20px 0;
+}
+
+.hidden {
+    display: none;
+}
+
 footer {
     background-color: #2973B2;
     color: #F2EFE7;

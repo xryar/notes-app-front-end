@@ -7,11 +7,17 @@ const home = async () => {
     const noteListElement = noteListContainer.querySelector('note-list');
     console.log(noteListElement);
     const formInputElement = document.querySelector('form-input');
+    console.log(formInputElement);
+    const loadingIndicator = document.querySelector('#loading');
 
     const showAllNotes = async () => {
         try {
+            loadingIndicator.classList.remove('hidden');
             noteListElement.innerHTML = '';
+
             const notes = await NotesApi.getAllNotes();
+
+            loadingIndicator.classList.add('hidden');
 
             notes.forEach(note => {
                 const noteItemElement = document.createElement('note-item');
@@ -20,6 +26,7 @@ const home = async () => {
             });
         } catch (error) {
             console.error('Gagal Mengambil Catatan cik: ', error);
+            loadingIndicator.classList.add('hidden');
         }
     }
 
