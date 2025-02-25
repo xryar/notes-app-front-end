@@ -36,7 +36,19 @@ const home = async () => {
         }
     }
 
+    const deleteNote = async (event) => {
+        const noteId = event.detail;
+        try {
+            await NotesApi.deleteNote(noteId);
+            await showAllNotes();
+            console.log('Berhasil Menghapus Catatan: ', noteId);
+        } catch (error) {
+            console.error('Gagal Menghapus Catatan: ', error);
+        }
+    }
+
     formInputElement.addEventListener('note-submitted', addNewNote);
+    noteListContainer.addEventListener('note-deleted', deleteNote);
     await showAllNotes();
 }
 

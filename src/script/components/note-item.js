@@ -1,6 +1,7 @@
 class NoteItem extends HTMLElement {
     _shadowRoot = null;
     _style = null;
+    _click = 'click';
     _note = {
         id: null,
         title: null,
@@ -13,10 +14,33 @@ class NoteItem extends HTMLElement {
         super();
         this._shadowRoot = this.attachShadow({ mode: 'open'});
         this._style = document.createElement('style');
+        this.render();
     }
 
     _emptyContent() {
         this._shadowRoot.innerHTML = '';
+    }
+
+    connectedCallback() {
+        this._shadowRoot
+            .querySelector('.btn-delete')
+            .addEventListener(this._click, (event) => this._handleDelete(event));
+    }
+
+    disconnectedCallback() {
+        this._shadowRoot
+            .querySelector('.btn-delete')
+            .removeEventListener(this._click, this._handleDelete);
+    }
+
+    _handleDelete(event) {
+        event.preventDefault();
+
+        this.dispatchEvent(new CustomEvent('note-deleted', {
+            detail: this.note.id,
+            bubbles: true,
+            composed: true,
+        }));
     }
 
     set note(value) {
@@ -49,6 +73,24 @@ class NoteItem extends HTMLElement {
                 padding: 12px 0;
                 text-align: center;
                 box-sizing: border-box;
+            }
+
+            .btn-delete {
+                display: block;
+                width: 90px;
+                height: 40px;
+                margin: 16px auto;
+                font-weight: bold;
+                border-radius: 12px;
+                cursor: pointer;
+                color: white;
+                background: lightcoral;
+                border: none;
+            }
+            
+            .btn-delete:hover {
+                background-color: red;
+                color: white;
             }
 
             .note-info__title h2 {
@@ -91,6 +133,7 @@ class NoteItem extends HTMLElement {
                         <p>${this.formatDate(this.note.createdAt)}</p>
                     </div>
                 </div>
+                <button class="btn-delete">Delete</button>
             </div>
         `;
     }

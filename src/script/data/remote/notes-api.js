@@ -23,16 +23,29 @@ class NotesApi {
             };
 
             const response = await fetch(`${BASE_URL}/notes`, options);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            
-            }
             const responseJson = await response.json();
             console.log(responseJson);
             return responseJson.data;
         } catch (error) {
             console.error('Error inserting note:', error);
+        }
+    }
+
+    static async deleteNote(noteId) {
+        try {
+            const options = {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+
+            const response = await fetch(`${BASE_URL}/notes/${noteId}`, options);
+            const responseJson = await response.json();
+            console.log(responseJson);
+            return responseJson.data;
+        } catch(error) {
+            console.error('Error deleting note:', error);
         }
     }
 }

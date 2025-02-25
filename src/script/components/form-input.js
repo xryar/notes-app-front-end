@@ -24,6 +24,29 @@ class FormInput extends HTMLElement {
             .removeEventListener(this._submitEvent, this._handleSubmit);
     }
 
+    _handleSubmit(event) {
+        event.preventDefault();
+        const titleElement = this._shadowRoot.querySelector('#noteFormTitle');
+        const bodyElement = this._shadowRoot.querySelector('#noteFormBody');
+
+        if(!titleElement.validity.valid || !bodyElement.validity.valid) {
+            return;
+        }
+
+        const noteData = {
+            title: titleElement.value,
+            body: bodyElement.value,
+        }
+
+        this.dispatchEvent(new CustomEvent('note-submitted', {
+            detail: noteData,
+            bubbles: true,
+            composed: true,
+        }));
+
+        event.target.reset();
+    }
+
     _validation() {
         const titleElement = this._shadowRoot.querySelector('#noteFormTitle');
         const bodyElement = this._shadowRoot.querySelector('#noteFormBody');
@@ -53,29 +76,6 @@ class FormInput extends HTMLElement {
         bodyElement.addEventListener('input', validateInput);
         titleElement.addEventListener('invalid', validateInput);
         bodyElement.addEventListener('invalid', validateInput);
-    }
-
-    _handleSubmit(event) {
-        event.preventDefault();
-        const titleElement = this._shadowRoot.querySelector('#noteFormTitle');
-        const bodyElement = this._shadowRoot.querySelector('#noteFormBody');
-
-        if(!titleElement.validity.valid || !bodyElement.validity.valid) {
-            return;
-        }
-
-        const noteData = {
-            title: titleElement.value,
-            body: bodyElement.value,
-        }
-
-        this.dispatchEvent(new CustomEvent('note-submitted', {
-            detail: noteData,
-            bubbles: true,
-            composed: true,
-        }));
-
-        event.target.reset();
     }
 
     _emptyContent() {
