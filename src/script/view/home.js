@@ -5,13 +5,9 @@ import NotesApi from "../data/remote/notes-api.js";
 
 const home = async () => {
   const noteListContainer = document.querySelector("#noteListContainer");
-  console.log(noteListContainer);
   const noteListElement = noteListContainer.querySelector("note-list");
-  console.log(noteListElement);
   const formInputElement = document.querySelector("form-input");
-  console.log(formInputElement);
   const loadingIndicator = document.querySelector("#loading");
-  console.log(loadingIndicator);
 
   const showAllNotes = async () => {
     try {
@@ -33,7 +29,7 @@ const home = async () => {
         );
       });
     } catch (error) {
-      console.error("Gagal Mengambil Catatan cik: ", error);
+      console.error("Error:", error);
       loadingIndicator.classList.add("hidden");
       Swal.fire({
         icon: "error",
